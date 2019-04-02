@@ -65,14 +65,30 @@ curl -X GET \
   -H 'x-client-secret: {Client-Secret}'
 ````
 
-###### C#
+###### Node
 
-```c#
-var client = new RestClient("https://www.alesteq.com/itemmanager/api/categories/1");
-var request = new RestRequest(Method.GET);
-request.AddHeader("authorization", "Bearer {Access-Token}");
-request.AddHeader("x-client-secret", "{Client-Secret}");
-IRestResponse response = client.Execute(request);
+```nginx
+const https = require("https");
+let options = {
+  "protocol": "https:",
+  "host": "www.alesteq.com",
+  "path": "/itemmanager/api/categories/1",
+  "method": "GET",
+  "headers": {
+    "Authorization": "Bearer {Acess-Token}",
+    "X-Client-Secret": "{Client-Secret}"
+  }
+};
+const req = https.request(options, (res) => {
+    let data = "";
+    res.on("data", (chunk) => {
+        data += chunk;
+    });
+    res.on("end", () => {
+    	console.log(JSON.parse(data));
+    })
+})
+req.end();
 ```
 
 ###### PHP
@@ -82,10 +98,7 @@ $curl = curl_init();
 curl_setopt_array($curl, array(
 	CURLOPT_URL => "https://www.alesteq.com/itemmanager/api/categories/1",
 	CURLOPT_RETURNTRANSFER => true,
-	CURLOPT_ENCODING => "",
-	CURLOPT_MAXREDIRS => 10,
 	CURLOPT_TIMEOUT => 30,
-	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 	CURLOPT_CUSTOMREQUEST => "GET",
 	CURLOPT_HTTPHEADER => array(
 		"authorization: Bearer {Access-Token}",
@@ -95,7 +108,6 @@ curl_setopt_array($curl, array(
 $response = curl_exec($curl);
 $err = curl_error($curl);
 curl_close($curl);
-
 if ($err) {
 	echo "cURL Error #:" . $err;
 } else {
@@ -107,10 +119,10 @@ if ($err) {
 
 ```python
 import http.client
-conn = http.client.HTTPConnection("https://www.alesteq.com")
+conn = http.client.HTTPSConnection("www.alesteq.com")
 headers = {
-    'authorization': "Bearer {Access-Token}",
-    'x-client-secret': "{Client-Secret}",
+    "authorization": "Bearer {Access-Token}",
+    "x-client-secret": "{Client-Secret}",
     }
 conn.request("GET", "/itemmanager/api/categories/1", headers=headers)
 res = conn.getresponse()
@@ -121,13 +133,15 @@ print(data.decode("utf-8"))
 ###### Ruby
 
 ```ruby
-require 'uri'
-require 'net/http'
+require "uri"
+require "net/https"
 url = URI("https://www.alesteq.com/itemmanager/api/categories/1")
 http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 request = Net::HTTP::Get.new(url)
-request["authorization"] = 'Bearer {Access-Token}'
-request["x-client-secret"] = '{Client-Secret}'
+request["authorization"] = "Bearer {Access-Token}"
+request["x-client-secret"] = "{Client-Secret}"
 response = http.request(request)
 puts response.read_body
 ```
@@ -141,7 +155,7 @@ let data = null,
 xhr.withCredentials = true;
 xhr.addEventListener("readystatechange", function () {
 	if (this.readyState === 4) {
-		console.log(this.responseText);
+		console.log(this.response);
 	}
 });
 xhr.open("GET", "https://www.alesteq.com/itemmanager/api/categories/1");
