@@ -67,7 +67,7 @@ curl -X GET \
 
 ###### Node
 
-```nginx
+```javascript
 const https = require("https");
 let options = {
   "protocol": "https:",
@@ -80,14 +80,14 @@ let options = {
   }
 };
 const req = https.request(options, (res) => {
-    let data = "";
-    res.on("data", (chunk) => {
-        data += chunk;
-    });
-    res.on("end", () => {
-    	console.log(JSON.parse(data));
-    })
-})
+  let data = "";
+  res.on("data", (chunk) => {
+    data += chunk;
+  });
+  res.on("end", () => {
+    console.log(JSON.parse(data));
+  });
+});
 req.end();
 ```
 
@@ -96,22 +96,22 @@ req.end();
 ```php
 $curl = curl_init();
 curl_setopt_array($curl, array(
-	CURLOPT_URL => "https://www.alesteq.com/itemmanager/api/categories/1",
-	CURLOPT_RETURNTRANSFER => true,
-	CURLOPT_TIMEOUT => 30,
-	CURLOPT_CUSTOMREQUEST => "GET",
-	CURLOPT_HTTPHEADER => array(
-		"authorization: Bearer {Access-Token}",
-		"x-client-secret: {Client-Secret}"
-	),
+  CURLOPT_URL => "https://www.alesteq.com/itemmanager/api/categories/1",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "authorization: Bearer {Access-Token}",
+    "x-client-secret: {Client-Secret}"
+  ),
 ));
 $response = curl_exec($curl);
 $err = curl_error($curl);
 curl_close($curl);
 if ($err) {
-	echo "cURL Error #:" . $err;
+  echo "cURL Error #:" . $err;
 } else {
-	echo $response;
+  echo $response;
 }
 ```
 
@@ -121,9 +121,9 @@ if ($err) {
 import http.client
 conn = http.client.HTTPSConnection("www.alesteq.com")
 headers = {
-    "authorization": "Bearer {Access-Token}",
-    "x-client-secret": "{Client-Secret}",
-    }
+  "authorization": "Bearer {Access-Token}",
+  "x-client-secret": "{Client-Secret}",
+}
 conn.request("GET", "/itemmanager/api/categories/1", headers=headers)
 res = conn.getresponse()
 data = res.read()
@@ -150,13 +150,12 @@ puts response.read_body
 
 ```javascript
 let data = null,
-		xhr = new XMLHttpRequest();
-		
+    xhr = new XMLHttpRequest();	
 xhr.withCredentials = true;
 xhr.addEventListener("readystatechange", function () {
-	if (this.readyState === 4) {
-		console.log(this.response);
-	}
+  if (this.readyState === 4) {
+    console.log(this.response);
+  }
 });
 xhr.open("GET", "https://www.alesteq.com/itemmanager/api/categories/1");
 xhr.setRequestHeader("authorization", "Bearer {Access-Token}");
@@ -177,7 +176,7 @@ $(function(){
       "authorization": "Bearer {Access-Token}",
       "x-client-secret": "{Client-Secret}",
     }
-  }
+  };
   $.ajax(settings).done(function (response) {
     console.log(response);
   });
