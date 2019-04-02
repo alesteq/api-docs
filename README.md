@@ -180,7 +180,6 @@ JSON形式で返します。
 {
   "code":"001",
   "name":"test",
-  ...
 }
 ```
 
@@ -585,5 +584,5 @@ JSON形式
 
 ## お問い合わせ
 
-ItemManagerについての[お問い合わせはこちらから](https://www.alesteq.com/contact)。
+ItemManagerについての[お問い合わせはこちらから](https://www.alesteq.com/itemmanager/contact)。
 
